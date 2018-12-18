@@ -78,6 +78,7 @@ public class CodeGenerateMojo extends AbstractMojo {
                 new ControllerCodeGenerator().generate(module, outputDirectory.getPath());
                 new ExtMapperCodeGenerator().generate(module, outputDirectory.getPath());
                 new ExtMapperCodeXmlGenerator().generate(module, outputDirectory.getPath());
+                new VoCodeGenerator().generate(module, outputDirectory.getPath());
             }
         } catch (IOException e) {
             e.printStackTrace();

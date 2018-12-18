@@ -92,7 +92,7 @@ public class Module {
 
     private void createEntityName() {
         entitySimpleName = segments[segments.length - 1];
-        entityPackage = modulePackage + "entity";
+        entityPackage = modulePackage + ".entity";
         entityVariateName = StringUtils.uncapitalize(entitySimpleName);
     }
 
