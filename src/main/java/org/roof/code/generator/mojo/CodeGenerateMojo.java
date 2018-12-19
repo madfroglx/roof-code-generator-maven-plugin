@@ -69,16 +69,27 @@ public class CodeGenerateMojo extends AbstractMojo {
             properties.load(in);
             String entitiesStr = properties.getProperty("codeGenerator.entities");
             String projectName = properties.getProperty("codeGenerator.projectName");
+            String serviceInterfaceDir = properties.getProperty("codeGenerator.serviceInterfaceBaseDir");
+            String serviceImplDir = properties.getProperty("codeGenerator.serviceImplBaseDir");
+            String controllerDir = properties.getProperty("codeGenerator.controllerBaseDir");
+            String extMapperDir = properties.getProperty("codeGenerator.extMapperBaseDir");
+            String extMapperXmlDir = properties.getProperty("codeGenerator.extMapperXmlBaseDir");
+            String voDir = properties.getProperty("codeGenerator.voBaseDir");
             String[] entityFullNames = StringUtils.split(entitiesStr, ",");
             for (String entityFullName : entityFullNames) {
                 Module module = new Module(entityFullName);
                 module.setProjectName(projectName);
-                new ServiceInterfaceCodeGenerator().generate(module, outputDirectory.getPath());
-                new ServiceImplCodeGenerator().generate(module, outputDirectory.getPath());
-                new ControllerCodeGenerator().generate(module, outputDirectory.getPath());
-                new ExtMapperCodeGenerator().generate(module, outputDirectory.getPath());
-                new ExtMapperCodeXmlGenerator().generate(module, outputDirectory.getPath());
-                new VoCodeGenerator().generate(module, outputDirectory.getPath());
+                new ServiceInterfaceCodeGenerator().generate(module,
+                        StringUtils.isEmpty(serviceInterfaceDir) ? outputDirectory.getPath() : serviceInterfaceDir);
+                new ServiceImplCodeGenerator().generate(module,
+                        StringUtils.isEmpty(serviceImplDir) ? outputDirectory.getPath() : serviceImplDir);
+                new ControllerCodeGenerator().generate(module,
+                        StringUtils.isEmpty(controllerDir) ? outputDirectory.getPath() : controllerDir);
+                new ExtMapperCodeGenerator().generate(module,
+                        StringUtils.isEmpty(extMapperDir) ? outputDirectory.getPath() : extMapperDir);
+                new ExtMapperCodeXmlGenerator().generate(module,
+                        StringUtils.isEmpty(extMapperXmlDir) ? outputDirectory.getPath() : extMapperXmlDir);
+                new VoCodeGenerator().generate(module, StringUtils.isEmpty(voDir) ? outputDirectory.getPath() : voDir);
             }
         } catch (IOException e) {
             e.printStackTrace();
