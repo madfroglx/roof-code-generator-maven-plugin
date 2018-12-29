@@ -66,7 +66,7 @@ public class ${serviceImplSimpleName} implements ${serviceInterfaceSimpleName} {
 	}
 
 	public ${entitySimpleName} selectForObject(${entitySimpleName} ${entityVariateName}){
-		return (${entitySimpleName}) daoSupport.selectByExample(${entityVariateName});
+		return (${entitySimpleName}) daoSupport.selectByExampleForObject(${entityVariateName});
 	}
 
 	public List<${entitySimpleName}> selectForList(${entitySimpleName} ${entityVariateName}){
