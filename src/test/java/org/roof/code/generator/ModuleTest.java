@@ -1,13 +1,16 @@
+/*
 package org.roof.code.generator;
 
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+*/
 /**
  * @author liuxin
  * @since 2018-12-10
- */
+ *//*
+
 public class ModuleTest {
     @Test
     public void testModule() {
@@ -19,4 +22,4 @@ public class ModuleTest {
         assertEquals("org.roof.db.mybatis.test.ticket.controller.TicketController", module.getControllerFullName());
     }
 
-}
+}*/

@@ -1,7 +1,11 @@
 package org.roof.code.generator;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.roof.code.generator.table.Column;
+import org.roof.code.generator.table.Table;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author liuxin
@@ -9,15 +13,21 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class Module {
 
-    private String projectName;
     private String[] segments;
+    private String outputDir;
+    private String database;
+    private String projectName;
 
-    private String modulePackage;
+    private String modulePackage; //项目包名 如 com.roof.spiderman
+    private String tableName; //生成的表名
 
-    private String entityPackage;
-    private String entityFullName;
-    private String entitySimpleName;
-    private String entityVariateName;
+    private String entityPackage; //实体类包名com.roof.spiderman.picture.entity
+    private String entityFullName;//类全名 如:com.roof.spiderman.picture.entity.Picture
+    private String entitySimpleName; // 类名 如:Picture
+    private String entityVariateName;// 变量名 如:picture
+
+    private Table table;
+    private List<Column> columns; //数据库列
 
     private String mapperPackage;
     private String mapperFullName;
@@ -45,14 +55,16 @@ public class Module {
     private String controllerSimpleName;
 
 
-    public Module(String entityFullName) {
-        this.entityFullName = entityFullName;
+    public Module(String modulePackage, String database, String tableName, String outputDir) {
+        this.modulePackage = modulePackage;
+        this.tableName = tableName;
+        this.outputDir = outputDir;
+        this.database = database;
         init();
     }
 
     private void init() {
-        segments = entityFullName.split("\\.");
-        createModulePackage();
+        segments = modulePackage.split("\\.");
         createEntityName();
         createMapper();
         createServiceInterfaceName();
@@ -62,7 +74,7 @@ public class Module {
 
     private void createControllerName() {
         controllerSimpleName = entitySimpleName + "Controller";
-        controllerPackage = modulePackage + ".controller";
+        controllerPackage = modulePackage + "." + entityVariateName + ".controller";
         controllerFullName = controllerPackage + "." + controllerSimpleName;
     }
 
@@ -74,7 +86,7 @@ public class Module {
 
     private void createServiceInterfaceName() {
         serviceInterfaceSimpleName = entitySimpleName + "Service";
-        serviceInterfacePackage = modulePackage + ".service";
+        serviceInterfacePackage = modulePackage + "." + entityVariateName + ".service";
         serviceInterfaceFullName = serviceInterfacePackage + "." + serviceInterfaceSimpleName;
         serviceInterfaceVariateName = StringUtils.uncapitalize(serviceInterfaceSimpleName);
     }
@@ -82,7 +94,7 @@ public class Module {
     private void createMapper() {
         mapperSimpleName = entitySimpleName + "Mapper";
         mapperExtSimpleName = entitySimpleName + "ExtMapper";
-        mapperPackage = modulePackage + ".mapper";
+        mapperPackage = modulePackage + "." + entityVariateName + ".mapper";
         mapperExtPackage = mapperPackage;
         mapperFullName = mapperPackage + "." + mapperSimpleName;
         mapperExtFullName = mapperExtPackage + "." + mapperExtSimpleName;
@@ -91,16 +103,13 @@ public class Module {
     }
 
     private void createEntityName() {
-        entitySimpleName = segments[segments.length - 1];
-        entityPackage = modulePackage + ".entity";
+        entitySimpleName = StringUtils.capitalize(StringUtils.substring(tableName,
+                StringUtils.indexOf(tableName, "_") + 1,
+                tableName.length()));
         entityVariateName = StringUtils.uncapitalize(entitySimpleName);
+        entityPackage = modulePackage + "." + entityVariateName + ".entity";
+        entityFullName = entityPackage + "." + entitySimpleName;
     }
-
-    private void createModulePackage() {
-        String[] modulePackageSegments = ArrayUtils.subarray(segments, 0, segments.length - 2);
-        modulePackage = StringUtils.join(modulePackageSegments, ".");
-    }
-
 
     public String getEntityFullName() {
         return entityFullName;
@@ -294,6 +303,46 @@ public class Module {
         this.serviceInterfaceVariateName = serviceInterfaceVariateName;
     }
 
+    public String getTableName() {
+        return tableName;
+    }
+
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
+    }
+
+    public String getOutputDir() {
+        return outputDir;
+    }
+
+    public void setOutputDir(String outputDir) {
+        this.outputDir = outputDir;
+    }
+
+    public String getDatabase() {
+        return database;
+    }
+
+    public void setDatabase(String database) {
+        this.database = database;
+    }
+
+    public Table getTable() {
+        return table;
+    }
+
+    public void setTable(Table table) {
+        this.table = table;
+    }
+
+    public List<Column> getColumns() {
+        return columns;
+    }
+
+    public void setColumns(List<Column> columns) {
+        this.columns = columns;
+    }
+
     public String getProjectName() {
         return projectName;
     }
@@ -301,4 +350,37 @@ public class Module {
     public void setProjectName(String projectName) {
         this.projectName = projectName;
     }
+
+    @Override
+    public String toString() {
+        return "Module{" +
+                "segments=" + Arrays.toString(segments) +
+                ", modulePackage='" + modulePackage + '\'' +
+                ", tableName='" + tableName + '\'' +
+                ", entityPackage='" + entityPackage + '\'' +
+                ", entityFullName='" + entityFullName + '\'' +
+                ", entitySimpleName='" + entitySimpleName + '\'' +
+                ", entityVariateName='" + entityVariateName + '\'' +
+                ", mapperPackage='" + mapperPackage + '\'' +
+                ", mapperFullName='" + mapperFullName + '\'' +
+                ", mapperSimpleName='" + mapperSimpleName + '\'' +
+                ", mapperVariateName='" + mapperVariateName + '\'' +
+                ", mapperExtPackage='" + mapperExtPackage + '\'' +
+                ", mapperExtFullName='" + mapperExtFullName + '\'' +
+                ", mapperExtSimpleName='" + mapperExtSimpleName + '\'' +
+                ", mapperExtVariateName='" + mapperExtVariateName + '\'' +
+                ", serviceInterfacePackage='" + serviceInterfacePackage + '\'' +
+                ", serviceInterfaceFullName='" + serviceInterfaceFullName + '\'' +
+                ", serviceInterfaceSimpleName='" + serviceInterfaceSimpleName + '\'' +
+                ", serviceInterfaceVariateName='" + serviceInterfaceVariateName + '\'' +
+                ", serviceImplPackage='" + serviceImplPackage + '\'' +
+                ", serviceImplFullName='" + serviceImplFullName + '\'' +
+                ", serviceImplSimpleName='" + serviceImplSimpleName + '\'' +
+                ", controllerPackage='" + controllerPackage + '\'' +
+                ", controllerFullName='" + controllerFullName + '\'' +
+                ", controllerSimpleName='" + controllerSimpleName + '\'' +
+                '}';
+    }
+
+
 }

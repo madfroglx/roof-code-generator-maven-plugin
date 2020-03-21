@@ -1,28 +1,19 @@
 package org.roof.code.generator;
 
+import org.springframework.stereotype.Component;
+
 /**
  * @author liuxin
  * @since 2018-12-10
  */
-public class ServiceImplCodeGenerator extends AbstractCodeGenerator {
+@Component
+public class ServiceImplCodeGenerator extends AbstractCodeGenerator2 {
 
     private static final String TEMPLATE_NAME = "temple/ServiceImplTemplate.ftl";
 
-
-    @Override
-    protected String getTemplateName() {
-        return TEMPLATE_NAME;
+    public void generate(Module module) {
+        writeToFile(module, TEMPLATE_NAME,
+                createOutputFile(module.getOutputDir(), module.getServiceImplPackage(), module.getServiceImplSimpleName() + ".java"));
     }
-
-    @Override
-    protected String getFilename(Module module) {
-        return module.getServiceImplSimpleName();
-    }
-
-    @Override
-    protected String getPackage(Module module) {
-        return module.getServiceImplPackage();
-    }
-
 
 }

@@ -1,28 +1,18 @@
 package org.roof.code.generator;
 
+import org.springframework.stereotype.Component;
+
 /**
  * @author liuxin
  * @since 2018-12-10
  */
-public class ExtMapperCodeGenerator extends AbstractCodeGenerator {
+@Component
+public class ExtMapperCodeGenerator extends AbstractCodeGenerator2 {
 
     private static final String TEMPLATE_NAME = "temple/MapperExtTemplate.ftl";
 
-
-    @Override
-    protected String getTemplateName() {
-        return TEMPLATE_NAME;
+    public void generate(Module module) {
+        writeToFile(module, TEMPLATE_NAME,
+                createOutputFile(module.getOutputDir(), module.getMapperExtPackage(), module.getMapperExtSimpleName() + ".java"));
     }
-
-    @Override
-    protected String getFilename(Module module) {
-        return module.getMapperExtSimpleName();
-    }
-
-    @Override
-    protected String getPackage(Module module) {
-        return module.getMapperExtPackage();
-    }
-
-
 }
