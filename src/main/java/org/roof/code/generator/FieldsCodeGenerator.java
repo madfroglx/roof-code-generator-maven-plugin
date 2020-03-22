@@ -1,12 +1,8 @@
 package org.roof.code.generator;
 
-import javafx.scene.control.TextFormatter;
 import org.apache.commons.lang3.StringUtils;
-import org.roof.code.generator.AbstractCodeGenerator;
-import org.roof.code.generator.Module;
 import org.roof.code.generator.table.Column;
 import org.roof.code.generator.utils.CamelCaseUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
@@ -21,7 +17,7 @@ import java.util.*;
 @Component
 @ConfigurationProperties(prefix = "data")
 @PropertySource("classpath:data_type_mapping.properties")
-public class FieldsCodeGenerator extends AbstractCodeGenerator2 {
+public class FieldsCodeGenerator extends AbstractCodeGenerator {
     private static final String FIELD_TEMPLATE = "/**\n *{2}\n**/\nprivate {0} {1};\n";
     private static final String IMPORT_TEMPLATE = "import {0};\n";
     private Map<String, String> typeMapping = new HashMap<>();

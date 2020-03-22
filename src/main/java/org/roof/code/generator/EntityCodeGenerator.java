@@ -1,13 +1,11 @@
 package org.roof.code.generator;
 
 import org.roof.code.generator.table.Column;
-import org.roof.code.generator.table.TableDescDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.lang.model.element.NestingKind;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +15,7 @@ import java.util.Map;
  * @since 2020/3/17
  */
 @Component
-public class EntityCodeGenerator extends AbstractCodeGenerator2 {
+public class EntityCodeGenerator extends AbstractCodeGenerator {
 
     private static final Logger CODE_LOGGER = LoggerFactory.getLogger("codeLogger");
 
@@ -25,6 +23,7 @@ public class EntityCodeGenerator extends AbstractCodeGenerator2 {
     @Autowired
     private FieldsCodeGenerator fieldsCodeGenerator;
 
+    @Override
     public void generate(Module module) {
         String entityPackage = module.getEntityPackage();
         List<Column> columns = module.getColumns();

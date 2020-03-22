@@ -6,22 +6,25 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.StringWriter;
 
 /**
  * @author liuxin
  * @since 2018-12-10
  */
 public abstract class AbstractCodeGenerator {
+    public static final Logger LOGGER = LoggerFactory.getLogger(AbstractCodeGenerator.class);
     private Configuration configuration = new Configuration(Configuration.VERSION_2_3_28);
 
-    protected Template loadTemplate() {
-        String templateName = getTemplateName();
+    protected Template loadTemplate(String templateName) {
         try {
             Resource templateResource = new ClassPathResource(templateName);
             StringTemplateLoader stringLoader = new StringTemplateLoader();
@@ -29,7 +32,7 @@ public abstract class AbstractCodeGenerator {
             configuration.setTemplateLoader(stringLoader);
             return configuration.getTemplate(templateName, "UTF-8");
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
         return null;
     }
@@ -38,9 +41,9 @@ public abstract class AbstractCodeGenerator {
         return StringUtils.replaceAll(packageName, "\\.", File.separator);
     }
 
-    protected File createOutputFile(Module module, String outputPath) {
-        File dir = new File(outputPath + File.separator + package2Path(getPackage(module)));
-        File target = new File(dir.getPath() + File.separator + getFilename(module) + ".java");
+    protected File createOutputFile(String outputPath, String packageName, String fileName) {
+        File dir = new File(outputPath + File.separator + package2Path(packageName));
+        File target = new File(dir.getPath() + File.separator + fileName);
         return getCreateFile(dir, target);
     }
 
@@ -54,20 +57,30 @@ public abstract class AbstractCodeGenerator {
         return target;
     }
 
-    public void generate(Module module, String outputPath) {
-        Template template = loadTemplate();
-        File target = createOutputFile(module, outputPath);
-        try (FileWriter fileWriter = new FileWriter(target)) {
-            assert template != null;
-            template.process(module, fileWriter);
+    protected String fillTemplate(Object dataModel, String templateName) {
+        Template template = loadTemplate(templateName);
+        assert template != null;
+        try (StringWriter stringWriter = new StringWriter()) {
+            template.process(dataModel, stringWriter);
+            return stringWriter.toString();
         } catch (TemplateException | IOException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
+        }
+        return null;
+    }
+
+    protected void writeToFile(Object dataModel, String templateName, File file) {
+        Template template = loadTemplate(templateName);
+        assert template != null;
+        try (FileWriter fileWriter = new FileWriter(file)) {
+            template.process(dataModel, fileWriter);
+        } catch (TemplateException | IOException e) {
+            LOGGER.error(e.getMessage(), e);
         }
     }
 
-    protected abstract String getTemplateName();
+    public void generate(Module module) {
 
-    protected abstract String getFilename(Module module);
+    }
 
-    protected abstract String getPackage(Module module);
 }

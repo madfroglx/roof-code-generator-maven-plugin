@@ -14,13 +14,14 @@ import java.util.Map;
  * @since 2020/3/19
  */
 @Component
-public class MapperXmlCodeGenerator extends AbstractCodeGenerator2 {
+public class MapperXmlCodeGenerator extends AbstractCodeGenerator {
     private static final String TEMPLATE_NAME = "temple/MapperXmlTemplate.ftl";
     private static final String CONDITION_TEMPLATE = "\t\t<if test=\"%s != null\">\n\t\t\tand %s = #{%s}\n\t\t</if>";
     private static final String STRING_CONDITION_TEMPLATE = "\t\t<if test=\"%s != null and %s != ''\">\n\t\t\tand %s = #{%s}\n\t\t</if>";
     public static final String STRING_UPDATE_IGNORE_NULL_SET_TEMPLATE = "\t\t<if test=\"%s != null and %s != ''\">\n\t\t\t%s=#{%s}, \n\t\t</if>";
     public static final String UPDATE_IGNORE_NULL_SET_TEMPLATE = "\t\t<if test=\"%s != null\">\n\t\t\t%s=#{%s}, \n\t\t</if>";
 
+    @Override
     public void generate(Module module) {
         String mapperFullName = module.getMapperFullName();
         Map<String, String> dataModel = new HashMap<>();
