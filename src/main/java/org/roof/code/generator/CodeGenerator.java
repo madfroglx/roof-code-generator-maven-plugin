@@ -22,6 +22,9 @@ public class CodeGenerator {
     private String outputDir;
     @Value("${code.gen.projectName}")
     private String projectName;
+    @Value("${code.gen.tablePre}")
+    private boolean tablePre;
+
     @Autowired
     private EntityCodeGenerator entityCodeGenerator;
     @Autowired
@@ -83,4 +86,5 @@ public class CodeGenerator {
     public void setModulePackage(String modulePackage) {
         this.modulePackage = modulePackage;
     }
+
 }

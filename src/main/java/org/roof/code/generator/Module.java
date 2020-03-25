@@ -3,6 +3,7 @@ package org.roof.code.generator;
 import org.apache.commons.lang3.StringUtils;
 import org.roof.code.generator.table.Column;
 import org.roof.code.generator.table.Table;
+import org.roof.code.generator.utils.CamelCaseUtils;
 
 import java.util.Arrays;
 import java.util.List;
@@ -28,6 +29,7 @@ public class Module {
 
     private Table table;
     private List<Column> columns; //数据库列
+    private boolean tablePre; //是否包含表名前缀
 
     private String mapperPackage;
     private String mapperFullName;
@@ -103,9 +105,13 @@ public class Module {
     }
 
     private void createEntityName() {
-        entitySimpleName = StringUtils.capitalize(StringUtils.substring(tableName,
-                StringUtils.indexOf(tableName, "_") + 1,
-                tableName.length()));
+        if (tablePre) {
+            entitySimpleName =CamelCaseUtils.toCapitalizeCamelCase(StringUtils.substring(tableName,
+                    StringUtils.indexOf(tableName, "_") + 1,
+                    tableName.length()));
+        } else {
+            entitySimpleName = CamelCaseUtils.toCapitalizeCamelCase((tableName));
+        }
         entityVariateName = StringUtils.uncapitalize(entitySimpleName);
         entityPackage = modulePackage + "." + entityVariateName + ".entity";
         entityFullName = entityPackage + "." + entitySimpleName;
@@ -349,6 +355,14 @@ public class Module {
 
     public void setProjectName(String projectName) {
         this.projectName = projectName;
+    }
+
+    public boolean isTablePre() {
+        return tablePre;
+    }
+
+    public void setTablePre(boolean tablePre) {
+        this.tablePre = tablePre;
     }
 
     @Override
