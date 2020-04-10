@@ -47,6 +47,9 @@ public class FieldsCodeGenerator extends AbstractCodeGenerator {
             dm.put("fieldName", CamelCaseUtils.toCamelCase(column.getColumnName()));
             dm.put("fieldNameCapital", CamelCaseUtils.toCapitalizeCamelCase(column.getColumnName()));
             dm.put("dataType", exchangeSimpleDateType(column.getDataType()));
+            if(exchangeSimpleDateType(column.getDataType()) == null){
+                System.out.println("ss");
+            }
             result.append(fillTemplate(dm, TEMPLATE_NAME));
         }
         return result.toString();

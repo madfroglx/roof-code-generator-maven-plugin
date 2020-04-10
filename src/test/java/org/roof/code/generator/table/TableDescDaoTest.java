@@ -20,7 +20,7 @@ public class TableDescDaoTest {
 
     @Test
     public void queryTableColumns() {
-        List<Column> h_atlas = tableDescDao.queryTableColumns("spiderman", "h_picture");
+        List<Column> h_atlas = tableDescDao.queryTableColumns("smart_energy_dev", "s_alias");
         System.out.println(fieldsCodeGenerator.generateImports(h_atlas));
         System.out.println(fieldsCodeGenerator.generateFields(h_atlas));
     }

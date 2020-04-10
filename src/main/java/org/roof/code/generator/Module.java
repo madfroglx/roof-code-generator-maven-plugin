@@ -57,11 +57,12 @@ public class Module {
     private String controllerSimpleName;
 
 
-    public Module(String modulePackage, String database, String tableName, String outputDir) {
+    public Module(String modulePackage, String database, String tableName, String outputDir, Boolean tablePre) {
         this.modulePackage = modulePackage;
         this.tableName = tableName;
         this.outputDir = outputDir;
         this.database = database;
+        this.tablePre = tablePre;
         init();
     }
 

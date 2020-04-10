@@ -48,7 +48,7 @@ public class CodeGenerator {
 
     public void generate() {
         for (String table : tables) {
-            Module module = new Module(modulePackage, database, table, outputDir);
+            Module module = new Module(modulePackage, database, table, outputDir, tablePre);
             module.setProjectName(projectName);
             moduleInitialization.init(module);
             entityCodeGenerator.generate(module);
