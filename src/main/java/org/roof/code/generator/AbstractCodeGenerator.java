@@ -38,7 +38,7 @@ public abstract class AbstractCodeGenerator {
     }
 
     protected String package2Path(String packageName) {
-        return StringUtils.replaceAll(packageName, "\\.", File.separator);
+        return StringUtils.replace(packageName, ".", File.separator);
     }
 
     protected File createOutputFile(String outputPath, String packageName, String fileName) {
