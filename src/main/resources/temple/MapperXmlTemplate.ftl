@@ -42,8 +42,9 @@
 
     <delete id="deleteByExample">
         delete from ${tableName}
-        where 1=1
-        <include refid="conds"/>
+        <where>
+            <include refid="conds"/>
+        </where>
     </delete>
 
     <update id="update">
@@ -73,16 +74,18 @@
         select
         <include refid="columns_as"/>
         from ${tableName}
-        where 1=1
-        <include refid="conds"/>
+        <where>
+            <include refid="conds"/>
+        </where>
     </select>
 
     <select id="selectForPage" resultType="${entityFullName}">
         select
         <include refid="columns_as"/>
         from ${tableName}
-        where 1=1
-        <include refid="conds"/>
+        <where>
+            <include refid="conds"/>
+        </where>
         order by
         <include refid="id_column"/>
         desc
@@ -95,7 +98,8 @@
         select
         count(id)
         from ${tableName}
-        where 1=1
-        <include refid="conds"/>
+        <where>
+            <include refid="conds"/>
+        </where>
     </select>
 </mapper>
