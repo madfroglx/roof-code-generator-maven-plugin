@@ -61,11 +61,11 @@ public interface ${serviceInterfaceSimpleName} {
     /**
     * 按对象中的非空属性作为条件，进行查询列表
     */
-    public abstract List<${entitySimpleName}> selectForList(${entitySimpleName} ${entityVariateName});
+    List<${entitySimpleName}> selectForList(${entitySimpleName} ${entityVariateName});
 
     /**
     * 按对象中的非空属性作为条件，进行分页查询
     */
-    public abstract Page page(Page page, ${entitySimpleName} ${entityVariateName});
+    Page page(Page page, ${entitySimpleName} ${entityVariateName});
 
 }
