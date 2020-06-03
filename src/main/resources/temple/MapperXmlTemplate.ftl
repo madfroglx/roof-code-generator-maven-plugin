@@ -94,7 +94,7 @@
         </if>
     </select>
 
-    <select id="selectCount" resultType="java.lang.Integer">
+    <select id="selectCount" resultType="java.lang.Long">
         select
         count(id)
         from ${tableName}
