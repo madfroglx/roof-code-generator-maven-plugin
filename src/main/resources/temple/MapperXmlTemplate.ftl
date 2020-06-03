@@ -89,7 +89,7 @@
         order by
         <include refid="id_column"/>
         desc
-        <if test="firshtrownum != null and firshtrownum != 0 and limit != null and limit != 0">
+        <if test="firstrownum != null and firstrownum != 0 and limit != null and limit != 0">
             ${r'limit #{firstrownum} , #{limit}'}
         </if>
     </select>
