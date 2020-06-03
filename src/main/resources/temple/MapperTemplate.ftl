@@ -45,7 +45,7 @@ public interface ${entitySimpleName}Mapper {
     /**
     * 根据匹配条件查询对象条数
     */
-    int selectCount(${entitySimpleName} ${entityVariateName});
+    long selectCount(${entitySimpleName} ${entityVariateName});
 
     /**
     * 带分页参数查询
