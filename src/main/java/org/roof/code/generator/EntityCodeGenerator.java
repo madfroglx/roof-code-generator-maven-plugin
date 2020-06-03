@@ -1,5 +1,6 @@
 package org.roof.code.generator;
 
+import org.apache.commons.lang3.RandomUtils;
 import org.roof.code.generator.table.Column;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +33,7 @@ public class EntityCodeGenerator extends AbstractCodeGenerator {
         String accessMethods = fieldsCodeGenerator.generateAccessMethod(columns);
         Map<String, String> dataModel = new HashMap<>();
         dataModel.put("entityPackage", entityPackage);
+        dataModel.put("serialVersionUID", RandomUtils.nextLong(100000L, Long.MAX_VALUE) + "L");
         dataModel.put("imports", imports);
         dataModel.put("fields", fields);
         dataModel.put("accessMethods", accessMethods);
