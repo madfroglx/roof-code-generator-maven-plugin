@@ -77,7 +77,7 @@ public class Module {
 
     private void createControllerName() {
         controllerSimpleName = entitySimpleName + "Controller";
-        controllerPackage = modulePackage + "." + entityVariateName + ".controller";
+        controllerPackage = modulePackage + "." + StringUtils.lowerCase(entityVariateName) + ".controller";
         controllerFullName = controllerPackage + "." + controllerSimpleName;
     }
 
@@ -89,7 +89,7 @@ public class Module {
 
     private void createServiceInterfaceName() {
         serviceInterfaceSimpleName = entitySimpleName + "Service";
-        serviceInterfacePackage = modulePackage + "." + entityVariateName + ".service";
+        serviceInterfacePackage = modulePackage + "." + StringUtils.lowerCase(entityVariateName) + ".service";
         serviceInterfaceFullName = serviceInterfacePackage + "." + serviceInterfaceSimpleName;
         serviceInterfaceVariateName = StringUtils.uncapitalize(serviceInterfaceSimpleName);
     }
@@ -97,7 +97,7 @@ public class Module {
     private void createMapper() {
         mapperSimpleName = entitySimpleName + "Mapper";
         mapperExtSimpleName = entitySimpleName + "ExtMapper";
-        mapperPackage = modulePackage + "." + entityVariateName + ".mapper";
+        mapperPackage = modulePackage + "." + StringUtils.lowerCase(entityVariateName) + ".mapper";
         mapperExtPackage = mapperPackage;
         mapperFullName = mapperPackage + "." + mapperSimpleName;
         mapperExtFullName = mapperExtPackage + "." + mapperExtSimpleName;
@@ -114,7 +114,7 @@ public class Module {
             entitySimpleName = CamelCaseUtils.toCapitalizeCamelCase((tableName));
         }
         entityVariateName = StringUtils.uncapitalize(entitySimpleName);
-        entityPackage = modulePackage + "." + entityVariateName + ".entity";
+        entityPackage = modulePackage + "." + StringUtils.lowerCase(entityVariateName) + ".entity";
         entityFullName = entityPackage + "." + entitySimpleName;
     }
 
