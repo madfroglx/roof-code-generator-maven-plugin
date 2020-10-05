@@ -19,9 +19,9 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = true)
 </#if>
 public class ${entitySimpleName} implements Serializable {
-private static final long serialVersionUID = ${serialVersionUID};
-${fields}
-<#if useLombok == false>
-${accessMethods!}
-</#if>
+    private static final long serialVersionUID = ${serialVersionUID};
+    ${fields}
+    <#if useLombok == false>
+    ${accessMethods!}
+    </#if>
 }
