@@ -5,6 +5,7 @@ import org.roof.code.generator.table.Column;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -24,6 +25,9 @@ public class EntityCodeGenerator extends AbstractCodeGenerator {
     @Autowired
     private FieldsCodeGenerator fieldsCodeGenerator;
 
+    @Value("${code.gen.useLombok}")
+    private boolean useLombok;
+
     @Override
     public void generate(Module module) {
         String entityPackage = module.getEntityPackage();
@@ -31,7 +35,8 @@ public class EntityCodeGenerator extends AbstractCodeGenerator {
         String imports = fieldsCodeGenerator.generateImports(columns);
         String fields = fieldsCodeGenerator.generateFields(columns);
         String accessMethods = fieldsCodeGenerator.generateAccessMethod(columns);
-        Map<String, String> dataModel = new HashMap<>();
+        Map<String, Object> dataModel = new HashMap<>();
+        dataModel.put("useLombok", useLombok);
         dataModel.put("entityPackage", entityPackage);
         dataModel.put("serialVersionUID", RandomUtils.nextLong(100000L, Long.MAX_VALUE) + "L");
         dataModel.put("imports", imports);

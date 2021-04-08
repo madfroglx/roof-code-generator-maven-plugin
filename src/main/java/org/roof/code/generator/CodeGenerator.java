@@ -86,5 +86,4 @@ public class CodeGenerator {
     public void setModulePackage(String modulePackage) {
         this.modulePackage = modulePackage;
     }
-
 }
